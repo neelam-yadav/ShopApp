@@ -1,5 +1,5 @@
 <p class='lead'>
-    Order {% if order.order_id %}#{{ order.order_id }}{% endif %} Summary</p>
+    Order {% if order.id %}#{{ order.id }}{% endif %} Summary</p>
 
 <table class='table'>
     <tr>
@@ -13,7 +13,18 @@
         <td>Items Total: {{ order.cart.total }}</td>
     </tr>
     <tr>
-        <td>Order Status: {{ order.status }}</td>
+        <td>Current Order Status: {{ order.status }}</td>
     </tr>
+    {% if user.groups.all.0.name = 'Sellers' %}
+    <tr>
+        <td>
+            <form class="form-group" action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p|safe }}
+                <input type="submit" class="btn btn-product">
+            </form>
+        </td>
+    </tr>
+    {% endif %}
 </table>
 </div>

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
+from .models import Order
+
 User = get_user_model()
 
 
@@ -19,3 +21,9 @@ class GuestCheckoutForm(forms.Form):
             return email2
         else:
             raise forms.ValidationError("Please confirm emails are the same")
+
+
+class OrderStatusForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['id', 'status']

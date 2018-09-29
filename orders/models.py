@@ -16,7 +16,11 @@ class UserCheckout(models.Model):
 
 
 ORDER_STATUS_CHOICES = (
+    ('accepted', 'Accepted'),
+    ('rejected', 'Rejected'),
     ('created', 'Created'),
+    ('dispatched', 'Dispatched'),
+    ('out', 'Out for Delivery'),
     ('paid', 'Paid'),
     ('shipped', 'Shipped'),
     ('refunded', 'Refunded'),
@@ -28,7 +32,6 @@ class Order(models.Model):
     cart = models.ForeignKey(Cart)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
     order_total = models.DecimalField(max_digits=50, decimal_places=2)
-    order_id = models.CharField(max_length=20, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.cart.id)
@@ -39,10 +42,8 @@ class Order(models.Model):
     def get_absolute_url(self):
         return reverse("order_detail", kwargs={"pk": self.pk})
 
-    def update_status(self, status, order_id=None):
+    def update_status(self, status):
         self.status = status
-        if order_id and not self.order_id:
-            self.order_id = order_id
         self.save()
 
 

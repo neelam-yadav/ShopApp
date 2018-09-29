@@ -24,8 +24,7 @@
 
         <tr>
             <td>
-                <a href='{{ object.get_absolute_url }}'>View #{% if object.order_id %}{{ object.order_id }}{% else %}{{
-                    object.id }}{% endif %}</a>
+                <a href='{{ object.get_absolute_url }}'>View #{{object.id }}</a>
 
             </td>
         </tr>

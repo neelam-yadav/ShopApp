@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+
+<script>
+{% block jquery %}
+// ajax add to cart
+
+$("#submit-btn").click(function(event){
+	event.preventDefault();
+	var formData = $("#add-form").serialize();
+	console.log(formData);
+	$.ajax({
+		type: "GET", // "POST"
+		url: "{% url 'cart' %}",
+		data: formData,
+		success: function(data) {
+			showFlashMessage(data.flash_message);
+			updateCartItemCount();
+		},
+		error: function(response, error) {
+			$("#add-form").submit()
+		}
+	})
+})
+
+
+
+{% endblock %}
+
+
+
+
+
+</script>
+
+
+{% block content %}
+
+
+<div class='row'>
+
+    <div class='col-sm-8'>
+        <h2>{{ object.title }}</h2>
+
+        {% if object.get_image_url %}
+        <div>
+            <img id='img' class='img-responsive' src='{{ object.get_image_url }}'/>
+        </div>
+        {% endif %}
+
+
+        <p class='lead'>
+            {{ object.description }}
+        </p>
+    </div>
+
+
+    <!-- Product Sidebar -->
+    <div class='col-sm-4'>
+
+        <form id='add-form' method='GET' action="{% url 'cart' %}">
+            <p id='jquery-message' class='lead'>
+
+            </p>
+            <input type="hidden" name='item' value='{{ object.id }}'/>
+            <h3 id='price'>
+                {{ object.price }}
+            </h3>
+
+            <br/>
+            <input class='form-control' type='number' name='qty' value='1'/>
+            <br/>
+            <input id='submit-btn' type='submit' value='Add to Cart' class='btn btn-default'/>
+        </form>
+
+        <br/>
+    </div>
+
+
+</div>
+<!-- End Product Sidebar -->
+
+
+</div>
+
+
+{% endblock %}

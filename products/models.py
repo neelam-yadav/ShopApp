@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 # Create your models here.
 def image_upload_to(instance, filename):
-    title = instance.product.title
+    title = instance.title
     slug = slugify(title)
     basename, file_extension = filename.split(".")
     new_filename = "%s-%s.%s" % (slug, instance.id, file_extension)

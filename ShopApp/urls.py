@@ -7,9 +7,10 @@ urlpatterns = [
     # Examples:
     url(r'^$', 'index.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/', include('registration.backends.simple.urls')),
     url(r'^products/', include('products.urls')),
     url(r'^orders/', include('orders.urls')),
+    url(r'^notifications/', include('orders.urls_notification')),
     url(r'^cart/', include('carts.urls')),
     url(r'^checkout/', include('carts.urls_checkout')),
 
